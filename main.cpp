@@ -1,38 +1,22 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+
 using namespace std;
-void del_povt(vector<double> &v)
-{
-    for(int i=0;i<v.size();i++){
-        for(int j=i+1;j<v.size();j++){
-            if(v[i]==v[j]){
-                v.erase(v.begin() + j);
-                j--;
-            }
-        }
+
+const size_t SCREEN_WIDTH = 80;
+const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
+
+vector<double>input_numbers(size_t &number_count) {
+    vector<double> result(number_count);
+    for (size_t i = 0; i < number_count; i++) {
+            cin >> result[i];
     }
+    return result;
 }
-int main()
-{   const size_t SCREEN_WIDTH = 80;
-    const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
-    size_t number_count;
-    size_t bin_count;
-    cerr << "Enter number count: ";
-    cin >> number_count;
-    vector<double> numbers(number_count);
-    cerr << "Enter numbers: ";
-    for(size_t i=0;i<number_count;i++){
-        cin >> numbers[i];
-    }
-    cerr << "Enter bin count: ";
-    cin >> bin_count;
-    del_povt(numbers);
-    number_count=numbers.size();
 
-
-    double min = numbers[0];
-    double max = numbers[0];
+void find_minmax(vector<double>&numbers, double &min, double &max) {
+    min = numbers[0];
     for (double x : numbers) {
        if (x < min) {
            min = x;
@@ -42,9 +26,25 @@ int main()
        }
   }
 
+}
+
+void removing_repetitions(vector<double> &v){
+    for(int i=0;i<v.size();i++){
+        for(int j=i+1;j<v.size();j++){
+            if(v[i]==v[j]){
+                v.erase(v.begin() + j);
+                j--;
+            }
+        }
+    }
+}
+
+vector<size_t> make_histogram(vector<double>&numbers,size_t bin_count){
+    double min, max;
+    find_minmax(numbers, min, max);
     vector<size_t> bins(bin_count);
     double bin_size = (max - min) / bin_count;
-    for (size_t i = 0; i < number_count; i++) {
+    for (size_t i = 0; i < numbers.size(); i++) {
         bool found = false;
         for (size_t j = 0; (j < bin_count - 1) && !found; j++) {
            auto lo = min + j * bin_size;
@@ -58,38 +58,54 @@ int main()
            bins[bin_count - 1]++;
         }
    }
+   return bins;
+}
+
+double find_max_count(const vector<size_t> &bins){
   double max_count=0;
   for (int i=0;i<bins.size();i++){
-
         if(max_count<bins[i]){
             max_count=bins[i];
         }
   }
+  return max_count;
+}
 
+void show_histogram_text(const vector<size_t> &bins){
+  double max_count=find_max_count(bins);
   size_t height ;
-
   for(int i=0;i<bins.size();i++){
         if(bins[i]<100){
             cout<<" ";
         }
         if(bins[i]<10){
-            cout<<" ";
-        }
-
+            cout<<" ";}
         cout <<bins[i]<<"|";
         if(max_count>MAX_ASTERISK){
                 height = MAX_ASTERISK * (static_cast<double>(bins[i]) / max_count);
                 for(size_t j=0;j<height;j++){
-                    cout<<"*";
-        }}
+                    cout<<"*";}}
         else{
             for(int j=0;j<bins[i];j++){
-                    cout<<"*";
-        }
-        }
-
+                    cout<<"*";}}
         cout<<endl;
     }
+}
 
+int main()
+{
+    size_t number_count, bin_count;
+    cerr << "Enter number count: ";
+    cin >> number_count;
+    cerr << "Enter numbers: ";
+    auto numbers = input_numbers(number_count);
+    cerr << "Enter bin count: ";
+    cin >> bin_count;
 
+    removing_repetitions(numbers);
+    double min, max;
+    find_minmax(numbers, min, max);
+
+    const auto bins = make_histogram(numbers, bin_count);
+    show_histogram_text(bins);
 }
