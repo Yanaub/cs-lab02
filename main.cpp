@@ -1,3 +1,4 @@
+#include "histogram.h"
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -15,7 +16,7 @@ vector<double>input_numbers(size_t &number_count) {
     return result;
 }
 
-void find_minmax(vector<double>&numbers, double &min, double &max) {
+/*void find_minmax(vector<double>&numbers, double &min, double &max) {
     min = numbers[0];
     for (double x : numbers) {
        if (x < min) {
@@ -26,7 +27,7 @@ void find_minmax(vector<double>&numbers, double &min, double &max) {
        }
   }
 
-}
+}*/
 
 void removing_repetitions(vector<double> &v){
     for(int i=0;i<v.size();i++){
