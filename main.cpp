@@ -123,7 +123,7 @@ void show_histogram_svg(const vector<size_t>& bins) {
     const auto FILL="#B0C4DE";
     svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
     double max_count=find_max_count(bins);
-    size_t height ;
+    size_t width ;
     double top = 0;
     for (size_t bin : bins) {
 
