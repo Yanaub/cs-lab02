@@ -16,14 +16,15 @@ vector<double>input_numbers(size_t &number_count) {
     }
     return result;
 }
+
 vector<string>input_colors(size_t &bin_count) {
     vector<string> result(bin_count);
     string color;
     for (size_t i = 0; i < bin_count; i++) {
             cin >> color;
-            if (color[0]=='#' or color.find(' ')!=color.npos){
+            bool flag=check_color(color);
+            if ((color[0]=='#' or color.find(' ')==color.npos) and flag==true){
                 result[i]=color;
-
             }
             else{
                 cout<<"input error";

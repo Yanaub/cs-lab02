@@ -1,4 +1,14 @@
 #include"svg_modul.h"
+
+bool check_color(string color){
+    if (color=="red"){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
+
 double find_max_count(const vector<size_t> &bins){
   double max_count=0;
   for (int i=0;i<bins.size();i++){
