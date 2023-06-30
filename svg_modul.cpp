@@ -41,6 +41,13 @@ void svg_rect(double x, double y, double width, double height,string stroke, str
     cout<<"<rect x='"<<x<<"' y='"<<y<<"' width='"<<width<<"' height='"<<height<<"' stroke='"<<stroke<<"' fill='"<<fill<<"' />";
 
 }
+void heading(double width, double height, int count_bins, double &x,double &y){
+    x=width/2;
+    y=(height/(count_bins+1))-((height/(count_bins+1))/2);
+    cout << "<text x='" << x << "' text-anchor='middle' y='"<<y<<"'>"<<"Histogram"<<"</text>";
+
+}
+
 void show_histogram_svg(const vector<size_t>& bins,const vector<string>& colors) {
     const size_t SCREEN_WIDTH = 80;
     const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
@@ -54,9 +61,13 @@ void show_histogram_svg(const vector<size_t>& bins,const vector<string>& colors)
     const auto STROKE="blue";
     const auto FILL="#B0C4DE";
     svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
+    double top = 0;
+    double x,y;
+    heading(IMAGE_WIDTH, IMAGE_HEIGHT, bins.size(),x,y);
+    top += (IMAGE_HEIGHT/(bins.size()+1));
     double max_count=find_max_count(bins);
     size_t width ;
-    double top = 0;
+
     for (size_t i=0;i<bins.size();i++) {
 
             const double bin_width = BLOCK_WIDTH * bins[i];

@@ -104,7 +104,7 @@ int main()
     const auto colors = input_colors(bin_count);
 
 
-    removing_repetitions(numbers);
+    //removing_repetitions(numbers);
     double min, max;
     find_minmax(numbers, min, max);
 
