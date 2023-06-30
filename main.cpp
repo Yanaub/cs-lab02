@@ -122,12 +122,19 @@ void show_histogram_svg(const vector<size_t>& bins) {
     const auto STROKE="blue";
     const auto FILL="#B0C4DE";
     svg_begin(IMAGE_WIDTH, IMAGE_HEIGHT);
+    double max_count=find_max_count(bins);
+    size_t height ;
     double top = 0;
     for (size_t bin : bins) {
+
             const double bin_width = BLOCK_WIDTH * bin;
-    svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
-    svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, STROKE,FILL);
-    top += BIN_HEIGHT;
+            svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
+            if(max_count>MAX_ASTERISK){
+                width = MAX_ASTERISK * (static_cast<double>(bin) / max_count);
+                svg_rect(TEXT_WIDTH, top, width, BIN_HEIGHT, STROKE,FILL);}
+            else{
+                svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, STROKE,FILL);}
+            top += BIN_HEIGHT;
 }
 svg_end();
 
@@ -142,7 +149,7 @@ int main()
     cerr << "Enter bin count: ";
     cin >> bin_count;
 
-    removing_repetitions(numbers);
+    //removing_repetitions(numbers);
     double min, max;
     find_minmax(numbers, min, max);
 
