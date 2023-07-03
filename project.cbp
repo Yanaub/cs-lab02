@@ -32,7 +32,13 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="1.cpp">
+		<Unit filename="histogram.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="svg_modul.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+                <Unit filename="svg_modul.cpp">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="histogram.h">

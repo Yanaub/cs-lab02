@@ -9,6 +9,14 @@ bool check_color(string color){
     }
 }
 
+bool color_flag(string color){
+    if ((color[0]=='#' or color.find(' ')==color.npos) ){
+                return true;
+            }
+            else
+                return false;
+}
+
 double find_max_count(const vector<size_t> &bins){
   double max_count=0;
   for (int i=0;i<bins.size();i++){

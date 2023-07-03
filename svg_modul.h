@@ -5,6 +5,7 @@
 
 using namespace std;
 bool check_color(string color);
+bool color_flag(string color);
 double find_max_count(const vector<size_t> &bins);
 void svg_begin(double width, double height);
 void svg_end();
