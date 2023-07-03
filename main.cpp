@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <istream>
+#include <curl/curl.h>
 
 using namespace std;
 
@@ -76,6 +77,7 @@ void removing_repetitions(Input input){
 
 int main()
 {
+    curl_global_init(CURL_GLOBAL_ALL);
     const auto input = read_input(cin,true);
 
 
