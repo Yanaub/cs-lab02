@@ -5,7 +5,8 @@
 #include <algorithm>
 #include <istream>
 #include <curl/curl.h>
-
+#include <sstream>
+#include <string>
 using namespace std;
 
 
@@ -71,26 +72,35 @@ void removing_repetitions(Input input){
     }
 }
 
-
-
-
-
-int main(int argc, char* argv[]) {
-    if (argc > 1) {
-            CURL* curl = curl_easy_init();
+Input download(const string& address) {
+stringstream buffer;
+CURL* curl = curl_easy_init();
             if(curl) {
                     CURLcode res;
-            curl_easy_setopt(curl, CURLOPT_URL, argv[1]);
+            curl_easy_setopt(curl, CURLOPT_URL, address);
             res = curl_easy_perform(curl);
             if (res!=CURLE_OK){
                 cout<< curl_easy_strerror(res);
                 exit(1);
             }
             curl_easy_cleanup(curl);}
-            return 0;
+            return read_input(buffer, false);
 }
+
+
+
+int main(int argc, char* argv[]) {
+
+    Input input;
+    if (argc > 1) {
+            input = download(argv[1]);
+    } else {
+        input = read_input(cin, true);
+}
+
+
     curl_global_init(CURL_GLOBAL_ALL);
-    const auto input = read_input(cin,true);
+
 
 
     removing_repetitions(input);
