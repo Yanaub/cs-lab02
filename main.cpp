@@ -7,11 +7,7 @@
 
 using namespace std;
 
-struct Input {
-vector<double> numbers;
-size_t bin_count;
-vector<string>colors;
-};
+
 
 const size_t SCREEN_WIDTH = 80;
 const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
@@ -71,27 +67,7 @@ void removing_repetitions(Input input){
     }
 }
 
-vector<size_t> make_histogram(Input input){
-    double min, max;
-    find_minmax(input.numbers, min, max);
-    vector<size_t> bins(input.bin_count);
-    double bin_size = (max - min) / input.bin_count;
-    for (size_t i = 0; i < input.numbers.size(); i++) {
-        bool found = false;
-        for (size_t j = 0; (j < input.bin_count - 1) && !found; j++) {
-           auto lo = min + j * bin_size;
-           auto hi = min + (j + 1) * bin_size;
-           if ((lo <= input.numbers[i]) && (input.numbers[i] < hi)) {
-                bins[j]++;
-                found = true;
-           }
-        }
-        if (!found) {
-           bins[input.bin_count - 1]++;
-        }
-   }
-   return bins;
-}
+
 
 
 void show_histogram_text(const vector<size_t> &bins){
