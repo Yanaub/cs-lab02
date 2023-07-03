@@ -3,25 +3,32 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <istream>
 
 using namespace std;
+
+struct Input {
+vector<double> numbers;
+size_t bin_count;
+vector<string>colors;
+};
 
 const size_t SCREEN_WIDTH = 80;
 const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
 
-vector<double>input_numbers(size_t &number_count) {
+vector<double>input_numbers(istream& in,size_t &number_count) {
     vector<double> result(number_count);
     for (size_t i = 0; i < number_count; i++) {
-            cin >> result[i];
+            in >> result[i];
     }
     return result;
 }
 
-vector<string>input_colors(size_t &bin_count) {
+vector<string>input_colors(istream& in,size_t &bin_count) {
     vector<string> result(bin_count);
     string color;
     for (size_t i = 0; i < bin_count; i++) {
-            cin >> color;
+            in >> color;
             bool flag=check_color(color);
             if ((color[0]=='#' or color.find(' ')==color.npos) and flag==true){
                 result[i]=color;
@@ -34,36 +41,53 @@ vector<string>input_colors(size_t &bin_count) {
     return result;
 }
 
+Input read_input(istream& in) {
+    Input data;
+    cerr << "Enter number count: ";
+    size_t number_count;
+    in >> number_count;
+    cerr << "Enter numbers: ";
+    data.numbers = input_numbers(in, number_count);
+    cerr << "Enter bin count: ";
+    in >> data.bin_count;
+    cerr << "Enter colors: ";
+    data.colors = input_colors(in,data.bin_count);
+    return data;
+}
 
 
-void removing_repetitions(vector<double> &v){
-    for(int i=0;i<v.size();i++){
-        for(int j=i+1;j<v.size();j++){
-            if(v[i]==v[j]){
-                v.erase(v.begin() + j);
+
+
+
+
+void removing_repetitions(Input input){
+    for(int i=0;i<input.numbers.size();i++){
+        for(int j=i+1;j<input.numbers.size();j++){
+            if(input.numbers[i]==input.numbers[j]){
+                input.numbers.erase(input.numbers.begin() + j);
                 j--;
             }
         }
     }
 }
 
-vector<size_t> make_histogram(vector<double>&numbers,size_t bin_count){
+vector<size_t> make_histogram(Input input){
     double min, max;
-    find_minmax(numbers, min, max);
-    vector<size_t> bins(bin_count);
-    double bin_size = (max - min) / bin_count;
-    for (size_t i = 0; i < numbers.size(); i++) {
+    find_minmax(input.numbers, min, max);
+    vector<size_t> bins(input.bin_count);
+    double bin_size = (max - min) / input.bin_count;
+    for (size_t i = 0; i < input.numbers.size(); i++) {
         bool found = false;
-        for (size_t j = 0; (j < bin_count - 1) && !found; j++) {
+        for (size_t j = 0; (j < input.bin_count - 1) && !found; j++) {
            auto lo = min + j * bin_size;
            auto hi = min + (j + 1) * bin_size;
-           if ((lo <= numbers[i]) && (numbers[i] < hi)) {
+           if ((lo <= input.numbers[i]) && (input.numbers[i] < hi)) {
                 bins[j]++;
                 found = true;
            }
         }
         if (!found) {
-           bins[bin_count - 1]++;
+           bins[input.bin_count - 1]++;
         }
    }
    return bins;
@@ -93,21 +117,13 @@ void show_histogram_text(const vector<size_t> &bins){
 
 int main()
 {
-    size_t number_count, bin_count;
-    cerr << "Enter number count: ";
-    cin >> number_count;
-    cerr << "Enter numbers: ";
-    auto numbers = input_numbers(number_count);
-    cerr << "Enter bin count: ";
-    cin >> bin_count;
-    cerr << "Enter colors: ";
-    const auto colors = input_colors(bin_count);
+    const auto input = read_input(cin);
 
 
-    removing_repetitions(numbers);
+    removing_repetitions(input);
     double min, max;
-    find_minmax(numbers, min, max);
+    find_minmax(input.numbers, min, max);
 
-    const auto bins = make_histogram(numbers, bin_count);
-    show_histogram_svg(bins,colors);
+    const auto bins = make_histogram(input);
+    show_histogram_svg(bins,input.colors );
 }
