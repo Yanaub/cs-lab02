@@ -9,8 +9,7 @@ using namespace std;
 
 
 
-const size_t SCREEN_WIDTH = 80;
-const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
+
 
 vector<double>input_numbers(istream& in,size_t &number_count) {
     vector<double> result(number_count);
@@ -37,15 +36,19 @@ vector<string>input_colors(istream& in,size_t &bin_count) {
     return result;
 }
 
-Input read_input(istream& in) {
+Input read_input(istream& in,bool prompt) {
     Input data;
+    if(prompt==true)
     cerr << "Enter number count: ";
     size_t number_count;
     in >> number_count;
+    if(prompt==true)
     cerr << "Enter numbers: ";
     data.numbers = input_numbers(in, number_count);
+    if(prompt==true)
     cerr << "Enter bin count: ";
     in >> data.bin_count;
+    if(prompt==true)
     cerr << "Enter colors: ";
     data.colors = input_colors(in,data.bin_count);
     return data;
@@ -70,30 +73,10 @@ void removing_repetitions(Input input){
 
 
 
-void show_histogram_text(const vector<size_t> &bins){
-  double max_count=find_max_count(bins);
-  size_t height ;
-  for(int i=0;i<bins.size();i++){
-        if(bins[i]<100){
-            cout<<" ";
-        }
-        if(bins[i]<10){
-            cout<<" ";}
-        cout <<bins[i]<<"|";
-        if(max_count>MAX_ASTERISK){
-                height = MAX_ASTERISK * (static_cast<double>(bins[i]) / max_count);
-                for(size_t j=0;j<height;j++){
-                    cout<<"*";}}
-        else{
-            for(int j=0;j<bins[i];j++){
-                    cout<<"*";}}
-        cout<<endl;
-    }
-}
 
 int main()
 {
-    const auto input = read_input(cin);
+    const auto input = read_input(cin,true);
 
 
     removing_repetitions(input);

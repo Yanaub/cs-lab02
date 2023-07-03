@@ -34,3 +34,30 @@ void find_minmax(vector<double>numbers, double &min, double &max) {
   }
     }
 }
+void show_histogram_text(const vector<size_t> &bins){
+    const size_t SCREEN_WIDTH = 80;
+const size_t MAX_ASTERISK = SCREEN_WIDTH - 3 - 1;
+    double max_count=0;
+  for (int i=0;i<bins.size();i++){
+        if(max_count<bins[i]){
+            max_count=bins[i];
+        }
+  }
+  size_t height ;
+  for(int i=0;i<bins.size();i++){
+        if(bins[i]<100){
+            cout<<" ";
+        }
+        if(bins[i]<10){
+            cout<<" ";}
+        cout <<bins[i]<<"|";
+        if(max_count>MAX_ASTERISK){
+                height = MAX_ASTERISK * (static_cast<double>(bins[i]) / max_count);
+                for(size_t j=0;j<height;j++){
+                    cout<<"*";}}
+        else{
+            for(int j=0;j<bins[i];j++){
+                    cout<<"*";}}
+        cout<<endl;
+    }
+}
