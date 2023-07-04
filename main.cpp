@@ -39,17 +39,22 @@ vector<string>input_colors(istream& in,size_t &bin_count) {
 }
 
 Input read_input(istream& in,bool prompt) {
+
     Input data;
+
     if(prompt==true)
     cerr << "Enter number count: ";
     size_t number_count;
     in >> number_count;
+    cerr<<number_count;
     if(prompt==true)
     cerr << "Enter numbers: ";
+
     data.numbers = input_numbers(in, number_count);
     if(prompt==true)
     cerr << "Enter bin count: ";
     in >> data.bin_count;
+
     if(prompt==true)
     cerr << "Enter colors: ";
     data.colors = input_colors(in,data.bin_count);
@@ -83,23 +88,33 @@ return 0;
 
 Input download(const string& address) {
 stringstream buffer;
+
 CURL* curl = curl_easy_init();
             if(curl) {
+
                     CURLcode res;
-            curl_easy_setopt(curl, CURLOPT_URL, address);
+
+            curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
+
             curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
+
             curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
+
             res = curl_easy_perform(curl);
-            if (res!=CURLE_OK){
-                cerr<< curl_easy_strerror(res);
-                char *ct;
-                cerr<<curl_easy_getinfo(curl, CURLINFO_CONTENT_TYPE, &ct);
 
+            if(CURLE_OK == res) {
 
-                exit(1);
-            }
+      char *ct;
+
+      res = curl_easy_getinfo(curl, CURLINFO_CONTENT_TYPE, &ct);
+
+      if((CURLE_OK == res) && ct)
+        cerr<<ct<<endl;
+
+    }
             curl_easy_cleanup(curl);}
-            return read_input(buffer, false);
+
+            return read_input(buffer, true);
 }
 
 
@@ -108,8 +123,9 @@ CURL* curl = curl_easy_init();
 int main(int argc, char* argv[]) {
 
     Input input;
-    if (argc > 1) {cerr<<"***********";
+    if (argc > 1) {
             input = download(argv[1]);
+
 
     } else {cerr<<"88888888";
         input = read_input(cin, true);
@@ -119,7 +135,7 @@ int main(int argc, char* argv[]) {
 
     curl_global_init(CURL_GLOBAL_ALL);
 
-
+cerr<<"789";
     removing_repetitions(input);
 
         double min, max;

@@ -1,0 +1,79 @@
+# depslib dependency file v1.0
+1688454870 source:c:\users\yanau\desktop\lab02\alice\project\main.cpp
+	"histogram.h"
+	"svg_modul.h"
+	<iostream>
+	<vector>
+	<algorithm>
+	<istream>
+	<curl/curl.h>
+	<sstream>
+	<string>
+
+1688384030 c:\users\yanau\desktop\lab02\alice\project\histogram.h
+	<string>
+	<vector>
+	<iostream>
+
+1688421564 source:c:\users\yanau\desktop\lab02\alice\project\histogram.cpp
+	"histogram.h"
+
+1688097733 c:\users\yanau\desktop\lab02\alice\project\histogram.cpp
+	"histogram.h"
+	<vector>
+
+1688379872 c:\users\yanau\desktop\lab02\alice\project\svg_modul.h
+	<vector>
+	<iostream>
+
+1688379950 source:c:\users\yanau\desktop\lab02\alice\project\svg_modul.cpp
+	"svg_modul.h"
+
+1685361112 c:\users\yanau\desktop\lab02\alice\project\curl\include\curl\curl.h
+	"curlver.h"
+	"system.h"
+	<stdio.h>
+	<limits.h>
+	<osreldate.h>
+	<sys/types.h>
+	<time.h>
+	<winsock2.h>
+	<ws2tcpip.h>
+	<sys/select.h>
+	<sys/socket.h>
+	<sys/time.h>
+	"easy.h"
+	"multi.h"
+	"urlapi.h"
+	"options.h"
+	"header.h"
+	"websockets.h"
+	"typecheck-gcc.h"
+
+1685416610 c:\users\yanau\desktop\lab02\alice\project\curl\include\curl\curlver.h
+
+1684137360 c:\users\yanau\desktop\lab02\alice\project\curl\include\curl\system.h
+	<ConditionalMacros.h>
+	<winsock2.h>
+	<windows.h>
+	<ws2tcpip.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<sys/poll.h>
+
+1685004688 c:\users\yanau\desktop\lab02\alice\project\curl\include\curl\easy.h
+
+1684137360 c:\users\yanau\desktop\lab02\alice\project\curl\include\curl\multi.h
+	"curl.h"
+
+1684137360 c:\users\yanau\desktop\lab02\alice\project\curl\include\curl\urlapi.h
+	"curl.h"
+
+1684137360 c:\users\yanau\desktop\lab02\alice\project\curl\include\curl\options.h
+
+1684137360 c:\users\yanau\desktop\lab02\alice\project\curl\include\curl\header.h
+
+1684137360 c:\users\yanau\desktop\lab02\alice\project\curl\include\curl\websockets.h
+
+1684137360 c:\users\yanau\desktop\lab02\alice\project\curl\include\curl\typecheck-gcc.h
+
