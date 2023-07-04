@@ -46,7 +46,6 @@ Input read_input(istream& in,bool prompt) {
     cerr << "Enter number count: ";
     size_t number_count;
     in >> number_count;
-    cerr<<number_count;
     if(prompt==true)
     cerr << "Enter numbers: ";
 
@@ -80,16 +79,17 @@ void removing_repetitions(Input &input){
 size_t write_data(void* items, size_t item_size, size_t item_count, void* ctx) {
     stringstream* buffer = reinterpret_cast<stringstream*>(ctx);
     size_t data_size=item_size*item_count;
-    const char* it = reinterpret_cast<const char*>(items);
-    buffer->write(it, data_size);
 
-return 0;
+    buffer->write(reinterpret_cast<const char*>(items), data_size);
+
+return data_size;
 }
 
 Input download(const string& address) {
 stringstream buffer;
 
 CURL* curl = curl_easy_init();
+double connect = 0;
             if(curl) {
 
                     CURLcode res;
@@ -101,20 +101,19 @@ CURL* curl = curl_easy_init();
             curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
 
             res = curl_easy_perform(curl);
+            if (res != CURLE_OK) {
+                cerr<<curl_easy_strerror(res);
+                res = curl_easy_getinfo(curl, CURLINFO_CONNECT_TIME, &connect);
+                cerr << connect << "\n";
+                exit(1);
+        }
 
-            if(CURLE_OK == res) {
 
-      char *ct;
 
-      res = curl_easy_getinfo(curl, CURLINFO_CONTENT_TYPE, &ct);
 
-      if((CURLE_OK == res) && ct)
-        cerr<<ct<<endl;
-
-    }
             curl_easy_cleanup(curl);}
 
-            return read_input(buffer, true);
+            return read_input(buffer, false);
 }
 
 
@@ -127,15 +126,15 @@ int main(int argc, char* argv[]) {
             input = download(argv[1]);
 
 
-    } else {cerr<<"88888888";
+    } else {
         input = read_input(cin, true);
 
 }
 
 
-    curl_global_init(CURL_GLOBAL_ALL);
 
-cerr<<"789";
+
+
     removing_repetitions(input);
 
         double min, max;
